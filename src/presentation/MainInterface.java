@@ -1,15 +1,21 @@
 package presentation;
 
-import metier.Category;
-import metier.Exposition;
-import metier.Feuillage;
-import metier.Sol;
+import dao.GererPlante;
+import metier.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 public class MainInterface extends JFrame {
 
+    JPanel container = new JPanel();
+    BoxLayout bl = new BoxLayout(container, BoxLayout.Y_AXIS);
     JPanel btns = new JPanel(new FlowLayout());
     JPanel topPanel = new JPanel(new GridLayout(1,4));
     JPanel bottomPanel = new JPanel(new GridLayout(1,1));
@@ -21,12 +27,18 @@ public class MainInterface extends JFrame {
     JTextField searchBox = new JTextField();
     JButton searchBtn = new JButton("search");
     JButton filterBtn = new JButton("filter");
+    JButton supprimerBtn = new JButton("supprimer");
 
     PlantTableModel tm = new PlantTableModel();
     JTable table = new JTable(tm);
     JScrollPane jsp = new JScrollPane(table);
+    JMenu menu = new JMenu("plant");
+    JMenuItem addPlant = new JMenuItem("add");
+    JMenuBar menuBar = new JMenuBar();
 
+    GestionPlante plantApi = new GestionPlante();
 
+    int selectedRow = -1;
     public MainInterface(){
 //        setSize(500,300);
         topPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.blue, 1)));
@@ -89,20 +101,99 @@ public class MainInterface extends JFrame {
         btns.add(searchBox);
         btns.add(searchBtn);
         btns.add(filterBtn);
-
+        btns.add(supprimerBtn);
         bottomPanel.add(jsp);
 
-        this.add(topPanel, BorderLayout.NORTH);
+        menu.add(addPlant);
+        menuBar.add(menu);
+        menuBar.setSize(new Dimension(getWidth(), 40));
+        container.setLayout(bl);
+        container.add(menuBar);
+        container.add(topPanel);
+        this.add(container, BorderLayout.NORTH);
         btns.setPreferredSize(new Dimension(200, 40));
         this.add(btns, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
+
         this.pack();
         setVisible(true);
 
+
+        tm.charger(plantApi.listeDesPlante());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        filterBtn.addActionListener(e -> {
+
+            String selectedCategory = getSelectedButtonText(categroryGrp);
+            String selectedSol = getSelectedButtonText(solGrp);
+            String selectedFeuilltage = getSelectedButtonText(fGrp);
+            String selectedExposition = getSelectedButtonText(eGrp);
+
+            tm.charger(plantApi.filtrerPlante(selectedCategory,selectedFeuilltage,selectedSol,selectedExposition));
+        });
+
+        searchBtn.addActionListener(e -> {
+            String mc = searchBox.getText();
+            tm.charger(plantApi.chercherPlanteParMC(mc));
+        });
+
+        supprimerBtn.addActionListener(e -> {
+            if(selectedRow > -1){
+                int id = (int) tm.getValueAt(selectedRow,0);
+                plantApi.supprimerPlante(id);
+                tm.charger(plantApi.listeDesPlante());
+            }
+            selectedRow = -1;
+        });
+
+        table.addMouseListener(new MListener());
     }
 
+    public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
     public static void main(String[] args) {
         new MainInterface();
+    }
+
+    class MListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent event) {
+            selectedRow = table.getSelectedRow();
+            if (event.getClickCount() == 2 && event.getButton() == MouseEvent.BUTTON1) {
+                String selectedPlant = (String) tm.getValueAt(selectedRow, 1);
+                new BuySellInterface(selectedPlant, tm,plantApi);
+                selectedRow = -1;
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
     }
 }
