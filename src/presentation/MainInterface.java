@@ -146,6 +146,10 @@ public class MainInterface extends JFrame {
             selectedRow = -1;
         });
 
+        addPlant.addActionListener(e -> {
+            new AddPlant(plantApi);
+        });
+
         table.addMouseListener(new MListener());
     }
 

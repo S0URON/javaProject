@@ -2,9 +2,15 @@ package presentation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import dao.GererPlante;
 import metier.*;
 
-public class AddPlant extends JFrame implements AddPlantInterface{
+public class AddPlant extends JFrame{
+
+    GestionPlante api;
 
 	JComboBox CategoryBox = new JComboBox(Category.types.toArray());
 	JComboBox SolBox = new JComboBox(Sol.types.toArray());
@@ -28,18 +34,10 @@ public class AddPlant extends JFrame implements AddPlantInterface{
 	JTextField prixBox = new JTextField();
 	JTextField qteBox = new JTextField();
 	
-	
-	
-	@Override
-	public void cancel() {
-	}
 
-	@Override
-	public void add(String nom, String category, String typeSol, String feuillage, String exposition, float prix,
-			int qte) {
-	}
 	
-	public AddPlant() {
+	public AddPlant(GestionPlante api) {
+        this.api = api;
 		topPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.blue, 1)));
 		centerPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.blue, 1)));
         bottomPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.red, 1), "Chose wisely"));
@@ -64,7 +62,7 @@ public class AddPlant extends JFrame implements AddPlantInterface{
         centerPanel.add(new JLabel("Prix :"));
         centerPanel.add(prixBox);
         
-        centerPanel.add(new JLabel("Quantité :"));
+        centerPanel.add(new JLabel("QuantitÃ© :"));
         centerPanel.add(qteBox);
         
         nameBox.setPreferredSize(new Dimension(150,30));
@@ -77,16 +75,46 @@ public class AddPlant extends JFrame implements AddPlantInterface{
         this.add(topPanel, BorderLayout.CENTER);
         this.add(centerPanel, BorderLayout.NORTH);
         this.add(bottomPanel, BorderLayout.SOUTH);
+
+        prixBox.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!((c >= '0') && (c <= '9') ||
+                        (c == KeyEvent.VK_BACK_SPACE) ||
+                        (c == KeyEvent.VK_DELETE))) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
+        qteBox.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!((c >= '0') && (c <= '9') ||
+                        (c == KeyEvent.VK_BACK_SPACE) ||
+                        (c == KeyEvent.VK_DELETE))) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
+        addBtn.addActionListener(e -> {
+
+        });
+
+        cancelBtn.addActionListener(e -> {
+            this.dispose();
+        });
         
         this.pack();
         setVisible(true);
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	
-	public static void main(String[] args) {
-       	new AddPlant();
-       }
-    
+
 	
 }
