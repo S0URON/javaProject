@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Sol{
     public String type;
-    private static final List<String> types = Arrays.asList(
+    public static final List<String> types = Arrays.asList(
             "Argileux",
             "Sec",
             "Caillouteux",
