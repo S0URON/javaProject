@@ -37,7 +37,7 @@ public class GererPlante {
 		}
 	}
 	
-	public List chercherPlante(String motClef) {
+	public List<Plante> chercherPlante(String motClef) {
 		Connection c = SingletonClass.getConnection();
 		 List<Plante> liste = new ArrayList<>();
 		try {
@@ -52,7 +52,7 @@ public class GererPlante {
 				}
 //	output		[3, plante_test3, 30.0, 250, Arbustes Fleuris, Pauvre, Persistant, Mi-ombre]
 				System.out.println(element.toString());
-				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(4)));
+				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(3)));
 				liste.add(newPlant);
 			}
 		} catch (SQLException | NumberFormatException | TypeException e) {
@@ -61,7 +61,7 @@ public class GererPlante {
 		return liste;
 	}
 	
-	public List findPlante() {
+	public List<Plante> findPlante() {
 		Connection c = SingletonClass.getConnection();
 		List<Plante> listePlantes = new ArrayList<>();
 		try {
@@ -73,7 +73,7 @@ public class GererPlante {
 					element.add(rs.getString(i));
 				}
 				System.out.println(element.toString());
-				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(4)));
+				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(3)));
 				listePlantes.add(newPlant);
 			}
 			return listePlantes;
@@ -106,8 +106,8 @@ public class GererPlante {
 			e.printStackTrace();
 		}
 	}
-	
-	public List searchByIndex(int id) {
+
+	public List<String> searchByIndex(int id) {
 		Connection cx = SingletonClass.getConnection();
 		List<String> element = new ArrayList<>();
 		try {
