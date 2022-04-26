@@ -17,7 +17,7 @@ public class GestionPlante implements IGestionPlante{
     @Override
     public Plante ajouterPlante(Plante e) {
         if(e != null){
-            this.orm.ajouterPlante(e.getNom(), Category.types.indexOf(e.getCategory()), Sol.types.indexOf(e.getTypeSol()),Feuillage.types.indexOf(e.getFeuillage()),Exposition.types.indexOf(e.getExposition()),e.getPrix(), e.getQte());
+            this.orm.ajouterPlante(e.getNom(), Category.types.indexOf(e.getCategory()) + 1, Sol.types.indexOf(e.getTypeSol()) + 1,Feuillage.types.indexOf(e.getFeuillage()) + 1,Exposition.types.indexOf(e.getExposition()) + 1,e.getPrix(), e.getQte());
             this.plantes = this.orm.findPlante();
         }
         return e;

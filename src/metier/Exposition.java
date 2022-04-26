@@ -18,4 +18,10 @@ public class Exposition{
         else
             throw new TypeException("ce type d'exposition n'existe pas");
     }
+    
+    public int getId() {
+    	int id = this.types.indexOf(this.name) + 1;
+    	return id;
+    }
+    
 }

@@ -80,7 +80,7 @@ public class AddPlant extends JFrame{
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!((c >= '0') && (c <= '9') ||
+                if (!((c >= '0') && (c <= '9') || (c == '-') || (c == '.') ||
                         (c == KeyEvent.VK_BACK_SPACE) ||
                         (c == KeyEvent.VK_DELETE))) {
                     getToolkit().beep();
@@ -101,11 +101,40 @@ public class AddPlant extends JFrame{
                 }
             }
         });
-
-        addBtn.addActionListener(e -> {
-
+        
+        nameBox.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!((c >= 'a') && (c <= 'z') || (c >= 'A') && (c <= 'A') || (c >= '0') && (c <= '9') ||
+                        (c == KeyEvent.VK_BACK_SPACE) ||
+                        (c == KeyEvent.VK_DELETE))) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
         });
 
+
+        addBtn.addActionListener(e -> {
+        	try {
+        		String cs = (String) CategoryBox.getSelectedItem();
+        		String ss = (String) SolBox.getSelectedItem();
+        		String es = (String) ExpositionBox.getSelectedItem();
+        		String fs = (String) FeuillageBox.getSelectedItem();
+        		String ns = (String) nameBox.getText();
+        		String ps = (String) prixBox.getText();
+        		String qs = (String) qteBox.getText();
+        		Plante plante = new Plante(ns, cs, ss, fs, es, Float.parseFloat(ps), Integer.parseInt(qs));
+        		this.api.ajouterPlante(plante);
+        		
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+        	
+        });
+        
         cancelBtn.addActionListener(e -> {
             this.dispose();
         });

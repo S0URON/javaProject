@@ -6,7 +6,7 @@ public class SingletonClass {
     private static Connection connection;
     static {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/base_1", "root", "");
             System.out.println("connection etablie");
         }catch (ClassNotFoundException e){

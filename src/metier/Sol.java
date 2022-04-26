@@ -23,4 +23,10 @@ public class Sol{
         else
             throw new TypeException("ce type de sol n'existe pas");
     }
+    
+    public int getId() {
+    	int id = this.types.indexOf(this.type) + 1;
+    	return id;
+    }
+    
 }
