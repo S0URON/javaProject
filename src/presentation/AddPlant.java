@@ -13,6 +13,7 @@ public class AddPlant extends JFrame implements AddPlantInterface{
 	
 	JPanel topPanel = new JPanel(new GridLayout(3,4));
 	JPanel bottomPanel = new JPanel(new GridLayout(2,2));
+	JPanel centerPanel = new JPanel(new GridLayout(3,3));
 	
 	JPanel categoryPanel = new JPanel(new GridLayout(3,1));
 	JPanel solPanel = new JPanel(new GridLayout(3,1));
@@ -23,20 +24,24 @@ public class AddPlant extends JFrame implements AddPlantInterface{
 	JButton addBtn = new JButton("Ajouter");
 	JButton cancelBtn = new JButton("Annuler");
 	
+	JTextField nameBox = new JTextField();
+	JTextField prixBox = new JTextField();
+	JTextField qteBox = new JTextField();
+	
+	
+	
 	@Override
 	public void cancel() {
-		
-		
 	}
 
 	@Override
 	public void add(String nom, String category, String typeSol, String feuillage, String exposition, float prix,
 			int qte) {
-		
 	}
 	
 	public AddPlant() {
 		topPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.blue, 1)));
+		centerPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.blue, 1)));
         bottomPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.red, 1), "Chose wisely"));
         
         categoryPanel.add(new JLabel("Category :"));
@@ -53,10 +58,24 @@ public class AddPlant extends JFrame implements AddPlantInterface{
         topPanel.add(feuillagePanel);
         topPanel.add(expositionPanel);
         
-        addBtn.setPreferredSize(new Dimension(200, 40));
+        centerPanel.add(new JLabel("Nom :"));
+        centerPanel.add(nameBox);
+        
+        centerPanel.add(new JLabel("Prix :"));
+        centerPanel.add(prixBox);
+        
+        centerPanel.add(new JLabel("Quantité :"));
+        centerPanel.add(qteBox);
+        
+        nameBox.setPreferredSize(new Dimension(150,30));
+        prixBox.setPreferredSize(new Dimension(150,30));
+        qteBox.setPreferredSize(new Dimension(150,30));
+        
         bottomPanel.add(addBtn);
         bottomPanel.add(cancelBtn);
-        this.add(topPanel, BorderLayout.NORTH);
+        addBtn.setPreferredSize(new Dimension(200, 40));
+        this.add(topPanel, BorderLayout.CENTER);
+        this.add(centerPanel, BorderLayout.NORTH);
         this.add(bottomPanel, BorderLayout.SOUTH);
         
         this.pack();
