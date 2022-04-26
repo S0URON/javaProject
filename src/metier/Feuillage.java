@@ -19,4 +19,10 @@ public class Feuillage{
         else
             throw new TypeException("ce type de feuillage n'existe pas");
     }
+    
+    public int getId() {
+    	int id = this.types.indexOf(this.name) + 1;
+    	return id;
+    }
+    
 }

@@ -26,4 +26,10 @@ public class Category{
 //        else
 //            throw new TypeException("cette categorie de plante n'existe pas");
     }
+    
+    public int getId() {
+    	int id = this.types.indexOf(this.name) + 1;
+    	return id;
+    }
+    
 }
