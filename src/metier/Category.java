@@ -21,9 +21,9 @@ public class Category{
 
 
     public Category(String type) throws TypeException {
-        if (types.contains(type))
+//        if (types.contains(type))
             this.name = type;
-        else
-            throw new TypeException("cette categorie de plante n'existe pas");
+//        else
+//            throw new TypeException("cette categorie de plante n'existe pas");
     }
 }

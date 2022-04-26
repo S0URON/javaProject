@@ -20,7 +20,7 @@ public class Plante {
         this.qte = qte;
     }
 
-    public String getNom() {
+	public String getNom() {
         return this.nom;
     }
 
