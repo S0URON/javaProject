@@ -1,26 +1,36 @@
 package metier;
 
+import dao.GererPlante;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GestionPlante implements IGestionPlante{
 
-    private List<Plante> plantes = new ArrayList<Plante>();
+    private List<Plante> plantes;
+    private GererPlante orm = new GererPlante();
 
+    public GestionPlante(){
+        this.plantes = this.orm.findPlante();
+    }
 
     @Override
     public Plante ajouterPlante(Plante e) {
-        if(e != null)
-            this.plantes.add(e);
+        if(e != null){
+            this.orm.ajouterPlante(e.getNom(), Category.types.indexOf(e.getCategory()), Sol.types.indexOf(e.getTypeSol()),Feuillage.types.indexOf(e.getFeuillage()),Exposition.types.indexOf(e.getExposition()),e.getPrix(), e.getQte());
+            this.plantes = this.orm.findPlante();
+        }
         return e;
     }
 
     @Override
     public void supprimerPlante(int id) {
-        int index = searchIndexById(id);
-        if(index >= 0){
-            this.plantes.remove(index);
-        }
+//        int index = searchIndexById(id);
+//        if(index >= 0){
+//            this.plantes.remove(index);
+//        }
+            this.orm.suppPlante(id);
+            this.plantes = this.orm.findPlante();
     }
 
     @Override
@@ -35,10 +45,10 @@ public class GestionPlante implements IGestionPlante{
 
     @Override
     public List<Plante> filtrerPlante(String category, String fueillage, String typeSol, String exposition) {
-        return this.plantes.stream().filter(plante -> (plante.getCategory().name.equals(category) || category.equals("all"))&&
-                (plante.getFeuillage().name.equals(fueillage) || fueillage.equals("all"))&&
-                (plante.getTypeSol().type.equals(typeSol) || typeSol.equals("all"))&&
-                (plante.getExposition().name.equals(exposition) || exposition.equals("all"))).toList();
+        return this.plantes.stream().filter(plante -> (plante.getCategory().equals(category) || category.equals("all"))&&
+                (plante.getFeuillage().equals(fueillage) || fueillage.equals("all"))&&
+                (plante.getTypeSol().equals(typeSol) || typeSol.equals("all"))&&
+                (plante.getExposition().equals(exposition) || exposition.equals("all"))).toList();
     }
 
     @Override
@@ -56,7 +66,8 @@ public class GestionPlante implements IGestionPlante{
             throw new PlanteException("qte à vendre doit etre > 0");
         if(availableQte < qte)
             throw new PlanteException("Qte dans le stock insuffisante");
-        this.plantes.get(index).setQte(availableQte - qte);
+        this.orm.reductionQte(this.plantes.get(index).getId(), qte);
+        this.plantes = this.orm.findPlante();
     }
 
     @Override
@@ -67,7 +78,8 @@ public class GestionPlante implements IGestionPlante{
         int availableQte = this.plantes.get(index).getQte();
         if(qte <= 0)
             throw new PlanteException("qte à acheter doit etre > 0");
-        this.plantes.get(index).setQte(availableQte + qte);
+        this.orm.augmentationQte(this.plantes.get(index).getId(), qte);
+        this.plantes = this.orm.findPlante();
     }
 
     private int searchIndexById(int id) {
@@ -84,5 +96,9 @@ public class GestionPlante implements IGestionPlante{
                 return i;
         }
         return -1;
+    }
+
+    public void setPlantes(List<Plante> p){
+        this.plantes = p;
     }
 }

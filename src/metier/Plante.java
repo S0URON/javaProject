@@ -20,24 +20,35 @@ public class Plante {
         this.qte = qte;
     }
 
-    public String getNom() {
+    public Plante(int id, String nom,String category, String typeSol, String feuillage, String exposition, float prix, int qte) throws TypeException{
+        this.id = id;
+        this.nom = nom;
+        this.category = new Category(category);
+        this.typeSol = new Sol(typeSol);
+        this.feuillage = new Feuillage(feuillage);
+        this.exposition = new Exposition(exposition);
+        this.prix = prix;
+        this.qte = qte;
+    }
+
+	public String getNom() {
         return this.nom;
     }
 
-    public Sol getTypeSol() {
-        return this.typeSol;
+    public String getTypeSol() {
+        return this.typeSol.type;
     }
 
-    public Feuillage getFeuillage() {
-        return this.feuillage;
+    public String getFeuillage() {
+        return this.feuillage.name;
     }
 
-    public Exposition getExposition() {
-        return this.exposition;
+    public String getExposition() {
+        return this.exposition.name;
     }
 
-    public Category getCategory() {
-        return this.category;
+    public String getCategory() {
+        return this.category.name;
     }
 
     public int getId() {

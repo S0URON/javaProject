@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Exposition{
     public String name;
-    private static final List<String> types = Arrays.asList(
+    public static final List<String> types = Arrays.asList(
             "Solei",
             "Ombre",
             "Mi-ombre"
