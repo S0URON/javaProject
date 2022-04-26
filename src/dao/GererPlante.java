@@ -52,7 +52,7 @@ public class GererPlante {
 				}
 //	output		[3, plante_test3, 30.0, 250, Arbustes Fleuris, Pauvre, Persistant, Mi-ombre]
 				System.out.println(element.toString());
-				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(4)));
+				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(3)));
 				liste.add(newPlant);
 			}
 		} catch (SQLException | NumberFormatException | TypeException e) {
@@ -73,7 +73,7 @@ public class GererPlante {
 					element.add(rs.getString(i));
 				}
 				System.out.println(element.toString());
-				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(4)));
+				Plante newPlant = new Plante(element.get(1), element.get(4), element.get(5), element.get(6), element.get(7), Float.parseFloat(element.get(2)), Integer.parseInt(element.get(3)));
 				listePlantes.add(newPlant);
 			}
 			return listePlantes;

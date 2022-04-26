@@ -6,8 +6,8 @@ public class test {
 		// TODO Auto-generated method stub
 		GererPlante p = new GererPlante();
 		
-//		System.out.println(p.chercherPlante("3").toString());
-		System.out.println(p.searchByIndex(2));
+		System.out.println(p.chercherPlante("3").toString());
+//		System.out.println(p.searchByIndex(2));
 	}
 
 }
