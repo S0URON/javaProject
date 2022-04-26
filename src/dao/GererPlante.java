@@ -37,7 +37,7 @@ public class GererPlante {
 		}
 	}
 	
-	public List chercherPlante(String motClef) {
+	public List<Plante> chercherPlante(String motClef) {
 		Connection c = SingletonClass.getConnection();
 		 List<Plante> liste = new ArrayList<>();
 		try {
@@ -61,7 +61,7 @@ public class GererPlante {
 		return liste;
 	}
 	
-	public List findPlante() {
+	public List<Plante> findPlante() {
 		Connection c = SingletonClass.getConnection();
 		List<Plante> listePlantes = new ArrayList<>();
 		try {
@@ -106,8 +106,8 @@ public class GererPlante {
 			e.printStackTrace();
 		}
 	}
-	
-	public List searchByIndex(int id) {
+
+	public List<String> searchByIndex(int id) {
 		Connection cx = SingletonClass.getConnection();
 		List<String> element = new ArrayList<>();
 		try {
